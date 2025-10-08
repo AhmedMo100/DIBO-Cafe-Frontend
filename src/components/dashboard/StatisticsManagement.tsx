@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore";
 import { Card, Row, Col, Spinner, Badge } from "react-bootstrap";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
@@ -43,9 +44,8 @@ const StatisticsManagement: React.FC = () => {
             try {
                 // --- Fetch Orders ---
                 const ordersSnap = await getDocs(collection(db, "orders"));
-                // Map Firestore docs to Order objects
                 setOrders(
-                    ordersSnap.docs.map(d => ({
+                    ordersSnap.docs.map((d: QueryDocumentSnapshot<DocumentData>) => ({
                         id: d.id,
                         status: (d.data().status as Order["status"]) ?? "pending",
                         createdAt: parseCreatedAt(d.data().createdAt),
@@ -55,9 +55,8 @@ const StatisticsManagement: React.FC = () => {
 
                 // --- Fetch Reservations ---
                 const resSnap = await getDocs(collection(db, "reservations"));
-                // Map Firestore docs to Reservation objects
                 setReservations(
-                    resSnap.docs.map(d => ({
+                    resSnap.docs.map((d: QueryDocumentSnapshot<DocumentData>) => ({
                         id: d.id,
                         status: (d.data().status as Reservation["status"]) ?? "pending",
                         createdAt: parseCreatedAt(d.data().createdAt),
@@ -67,9 +66,8 @@ const StatisticsManagement: React.FC = () => {
 
                 // --- Fetch Messages ---
                 const msgSnap = await getDocs(collection(db, "contactMessages"));
-                // Map Firestore docs to Message objects
                 setMessages(
-                    msgSnap.docs.map(d => ({
+                    msgSnap.docs.map((d: QueryDocumentSnapshot<DocumentData>) => ({
                         id: d.id,
                         createdAt: parseCreatedAt(d.data().createdAt),
                         name: d.data().name || "غير معروف"
@@ -191,7 +189,7 @@ const StatisticsManagement: React.FC = () => {
                         <ResponsiveContainer width="100%" height={250}>
                             <PieChart>
                                 <Pie data={orderStatusData} dataKey="value" nameKey="name" outerRadius={80} label>
-                                    {orderStatusData.map((entry, index) => (
+                                    {orderStatusData.map((_, index) => (
                                         <Cell key={index} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
@@ -206,7 +204,7 @@ const StatisticsManagement: React.FC = () => {
                         <ResponsiveContainer width="100%" height={250}>
                             <PieChart>
                                 <Pie data={reservationStatusData} dataKey="value" nameKey="name" outerRadius={80} label>
-                                    {reservationStatusData.map((entry, index) => (
+                                    {reservationStatusData.map((_, index) => (
                                         <Cell key={index} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>

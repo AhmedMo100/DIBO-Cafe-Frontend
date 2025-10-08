@@ -1,8 +1,7 @@
-// src/pages/ReservationsManagement.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
-import { Table, Card, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { Table, Card, Row, Col, Form, Button, Modal, Spinner } from "react-bootstrap";
 
 interface Reservation {
     id: string;
@@ -134,6 +133,14 @@ const ReservationsManagement: React.FC = () => {
     // ---------------------------- Render ----------------------------
     return (
         <div className="reservations-management p-3">
+            {/* Loading Spinner */}
+            {loading && (
+                <div className="text-center mb-3">
+                    <Spinner animation="border" variant="primary" />
+                    <p className="mt-2">جاري تحميل الحجوزات...</p>
+                </div>
+            )}
+
             <Row className="mb-4">
                 <Col md={4}>
                     <Card className="analytics-card text-center">
@@ -238,7 +245,7 @@ const ReservationsManagement: React.FC = () => {
                 {filtered.map((r) => (
                     <Card className="mb-3" key={r.id}>
                         <Card.Body>
-                            <h6>{r.clientName}</h6>
+                            <h6>{r.name}</h6>
                             <p className="mb-1">رقم الهاتف: {r.phone ?? "-"}</p>
                             <p className="mb-1">
                                 التاريخ: {new Date(r.date).toLocaleDateString()} - الساعة: {r.time}

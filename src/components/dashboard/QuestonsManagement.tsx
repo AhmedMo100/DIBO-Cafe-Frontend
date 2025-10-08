@@ -3,9 +3,6 @@ import {
     Button,
     Form,
     Modal,
-    Table,
-    Row,
-    Col,
 } from "react-bootstrap";
 import {
     collection,
@@ -79,7 +76,7 @@ const FAQManagement: React.FC = () => {
 
     useEffect(() => {
         fetchFAQs();
-    }, []);
+    }, );
 
     // ---------------------------- Filter Function ----------------------------
     const filterData = (

@@ -79,7 +79,7 @@ const ProductsManagement: React.FC = (): JSX.Element => {
     const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const [filter, setFilter] = useState<string>("");
     const [sortField, setSortField] = useState<"name" | "price" | "category">("name");
-    const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+    const [sortDir] = useState<"asc" | "desc">("asc");
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [editing, setEditing] = useState<Product | null>(null);
@@ -198,7 +198,7 @@ const ProductsManagement: React.FC = (): JSX.Element => {
     useEffect(() => {
         fetchProducts();
         fetchCategories();
-    }, []);
+    }, );
 
     // ---------------------------- Modal Controls ----------------------------
     const openAdd = (): void => {
@@ -583,9 +583,10 @@ const ProductsManagement: React.FC = (): JSX.Element => {
                             <Form.Control
                                 type="file"
                                 onChange={async (e) => {
-                                    if (e.target.files && e.target.files[0]) {
+                                    const target = e.target as HTMLInputElement; 
+                                    if (target.files && target.files[0]) {
                                         try {
-                                            const url = await uploadImageToCloudinary(e.target.files[0]);
+                                            const url = await uploadImageToCloudinary(target.files[0]);
                                             setForm((prev) => ({ ...prev, img: url }));
                                         } catch (err) {
                                             console.error("uploadImage error:", err);
