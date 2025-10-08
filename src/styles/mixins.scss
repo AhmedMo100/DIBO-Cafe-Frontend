@@ -1,0 +1,333 @@
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin transition($time: 0.3s, $type: ease-in-out) {
+    transition: all $time $type;
+}
+
+@mixin flex-center($direction: row, $justify: center, $align: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+
+// ======================
+// Mixins for reusable styles
+// ======================
+
+// ----------------------------
+// Smooth transition for hover effects, animations, etc.
+// Usage: @include smooth-transition;
+@mixin smooth-transition($properties: all, $duration: 0.3s, $timing: ease) {
+    transition: $properties $duration $timing;
+}
+
+// ----------------------------
+// Flex center both horizontally and vertically
+// Usage: @include flex-center;
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// ----------------------------
+// Card shadow effect
+// Usage: @include card-shadow;
+@mixin card-shadow($color: rgba(0, 0, 0, 0.1), $x: 0px, $y: 4px, $blur: 8px) {
+    box-shadow: $x $y $blur $color;
+}
+
+// ----------------------------
+// Responsive font size (fluid typography)
+// Usage: @include responsive-font(16px, 24px);
+@mixin responsive-font($min, $max) {
+    font-size: clamp($min, 2vw, $max);
+}
+
+// ----------------------------
+// Ellipsis for text overflow
+// Usage: @include text-ellipsis(1);
+@mixin text-ellipsis($lines: 1) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// ----------------------------
+// Circle element
+// Usage: @include circle(50px);
+@mixin circle($size) {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------
+// Mixin: Center Flex
+// Quickly center content horizontally and vertically
+// -------------------------------
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// -------------------------------
+// Mixin: Responsive Font Size
+// Dynamically adjusts font size for smaller screens
+// -------------------------------
+@mixin responsive-font($size, $sm-size) {
+    font-size: $size;
+
+    @media (max-width: 768px) {
+        font-size: $sm-size;
+    }
+}
+
+// -------------------------------
+// Mixin: Button Style
+// Base style for buttons used across dashboard
+// -------------------------------
+@mixin button-style($bg-color, $text-color: $white) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: 10px;
+    font-family: $font-menu;
+    font-weight: $medium;
+    font-size: 15px;
+    padding: 10px 20px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba($black, 0.15);
+
+    &:hover {
+        background-color: darken($bg-color, 8%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba($black, 0.2);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+// -------------------------------
+// Mixin: Card Style
+// Standard card layout for dashboard items
+// -------------------------------
+@mixin card-style {
+    background-color: $white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba($black, 0.08);
+    padding: 1rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba($black, 0.12);
+    }
+}
+
+// -------------------------------
+// Mixin: Modal Size
+// Control modal max width on large screens
+// -------------------------------
+@mixin modal-size($max-width) {
+    .modal-dialog {
+        max-width: $max-width;
+        margin: 1.75rem auto;
+    }
+
+    @media (max-width: 768px) {
+        .modal-dialog {
+            max-width: 90%;
+        }
+    }
+}
+
+// -------------------------------
+// Mixin: Custom Dropdown
+// Customize background, border, and position
+// -------------------------------
+@mixin custom-dropdown($bg-color, $item-color, $hover-bg) {
+    background-color: $bg-color;
+    color: $item-color;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba($black, 0.15);
+    border: 1px solid lighten($bg-color, 10%);
+    font-family: $font-menu;
+
+    option {
+        background-color: $bg-color;
+        color: $item-color;
+        padding: 10px;
+        font-size: 15px;
+
+        &:hover {
+            background-color: $hover-bg;
+        }
+    }
+}
+
+// -------------------------------
+// Mixin: Checkbox Custom Style
+// Clean, modern checkbox design
+// -------------------------------
+@mixin custom-checkbox($border-color, $check-color) {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $border-color;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:checked {
+        background-color: $check-color;
+        border-color: $check-color;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 4px;
+            height: 8px;
+            border: solid $white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    &:hover {
+        border-color: darken($border-color, 10%);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// Responsive Breakpoints
+@mixin respond($breakpoint) {
+    @if $breakpoint ==xs {
+        @media (max-width: 575.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==sm {
+        @media (max-width: 767.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==md {
+        @media (max-width: 991.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==lg {
+        @media (max-width: 1199.98px) {
+            @content;
+        }
+    }
+}
+
+// Center Flex
+@mixin flex-center($direction: row, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: center;
+    gap: $gap;
+}
+
+// Transition
+@mixin transition($time: 0.3s, $type: ease) {
+    transition: all $time $type;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Responsive Breakpoints
+@mixin respond($breakpoint) {
+    @if $breakpoint ==xs {
+        @media (max-width: 575.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==sm {
+        @media (max-width: 767.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==md {
+        @media (max-width: 991.98px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==lg {
+        @media (max-width: 1199.98px) {
+            @content;
+        }
+    }
+}
+
+// Flex Center
+@mixin flex-center($direction: row, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+// Transition
+@mixin transition($time: 0.3s, $type: ease) {
+    transition: all $time $type;
+}

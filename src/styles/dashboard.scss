@@ -1,0 +1,2548 @@
+@import "./variables.scss";
+@import "./mixins.scss";
+
+
+// ======================
+// Dashboard Layout
+// ======================
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+    font-family: $font-body;
+    margin: 0;
+    padding: 0;
+
+    .row {
+        width: 100% !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    // ----------------------------
+    // Sidebar (Fixed, always visible)
+    // ----------------------------
+    .dashboard-sidebar {
+        position: fixed; // ✅ Fixed sidebar on desktop
+        top: 0;
+        right: 0;
+        width: 16%; // Adjust width as needed
+        height: 100vh; // Full viewport height
+        background: $black;
+        color: $white;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+
+        // Logo
+        .sidebar-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid $beige;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        // Navigation links
+        .nav-link {
+            font-family: $font-menu;
+            font-size: 1rem;
+            color: $white !important;
+            padding: 12px 0;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            @include smooth-transition; // from mixins.scss
+
+            &:hover {
+                color: $beige !important;
+            }
+
+            &.active {
+                font-weight: $bold;
+                color: $beige !important;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    right: -10px;
+                    top: 50%;
+                    transform: translateY(-50%) scaleY(1);
+                    width: 3px;
+                    height: 70%;
+                    background-color: $beige;
+                    border-radius: 2px;
+                    @include smooth-transition;
+                }
+            }
+        }
+
+        // Footer social icons
+        .sidebar-footer {
+            .social-icon {
+                color: $white;
+                font-size: 1.2rem;
+                @include smooth-transition;
+
+                &:hover {
+                    color: $beige;
+                }
+            }
+
+            // Removed divider
+            .divider {
+                display: none;
+            }
+        }
+    }
+
+    // ----------------------------
+    // Main Content
+    // ----------------------------
+    .dashboard-content {
+        background: $white;
+        flex: 1;
+
+        // Header fixed
+        .dashboard-header {
+            position: sticky; // ✅ fixed header
+            top: 0;
+            background: $white;
+            border-bottom: 1px solid lighten($black, 60%);
+            z-index: 999;
+            padding: 35px 0 !important;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            h2 {
+                font-family: $font-slogans;
+                font-weight: $bold;
+                font-size: 1.5rem;
+                margin: 0;
+            }
+        }
+
+        .dashboard-body {
+            font-family: $font-body;
+            margin-top: 10px;
+        }
+    }
+
+    // ----------------------------
+    // Responsive adjustments
+    // ----------------------------
+    @media (max-width: 768px) {
+        .dashboard-sidebar {
+            width: 70%;
+            height: 100%;
+            background: $black !important; // background black
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-y: auto;
+
+            // Logo small circle
+            .sidebar-logo {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 2px solid $beige;
+                margin-bottom: 2rem;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            // Navigation links
+            .nav-link {
+                font-family: $font-menu;
+                font-size: 1.1rem;
+                color: $dark-beige !important; // dark beige links
+                padding: 15px 10px;
+                text-align: center;
+                width: 100%;
+                border-bottom: 1px solid lighten($black, 10%);
+                @include smooth-transition;
+
+                &:hover,
+                &.active {
+                    color: $beige !important;
+                }
+            }
+
+            // Footer social icons
+            .sidebar-footer {
+                margin-top: auto; // push to bottom
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+
+                .social-icon {
+                    color: $dark-beige;
+                    font-size: 1.5rem;
+                    @include smooth-transition;
+
+                    &:hover {
+                        color: $beige;
+                    }
+                }
+
+                .divider {
+                    display: none; // remove divider
+                }
+            }
+        }
+
+        // Mobile toggle button
+        .mobile-toggle-btn {
+            position: fixed;
+            top: 25px;
+            right: 15px;
+            z-index: 1100;
+            background: $black !important;
+            border: none;
+            color: $white;
+            @include smooth-transition;
+
+            &:hover {
+                background: darken($black, 10%);
+            }
+
+            &.active {
+                display: none; // hide button when sidebar is open
+            }
+        }
+
+        // Offcanvas header spacing
+        .mobile-offcanvas-header {
+            justify-content: space-between; // X left, Title right
+            padding: 10px 20px;
+        }
+
+        .dashboard-content {
+            margin-right: 0; // full width on mobile
+            padding: 15px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Home
+// ======================
+.dashboard-home {
+    min-height: calc(100vh - 120px); // adjust for header height
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 20px;
+    font-family: $font-body;
+
+    // ----------------------------
+    // Welcome Box
+    // ----------------------------
+    .welcome-box {
+        color: $black;
+        padding: 30px 25px;
+        border-radius: 20px;
+        max-width: 700px;
+        text-align: center;
+        background: lighten($beige, 45%);
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 130px;
+            height: 130px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: $black;
+        }
+    }
+
+    // ----------------------------
+    // Statistics Cards
+    // ----------------------------
+    .stat-card {
+        border-radius: 18px;
+        padding: 25px 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+
+        &:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: $white;
+        }
+
+        h5 {
+            font-family: $font-menu;
+            font-weight: $bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        h3 {
+            font-family: $font-heading;
+            font-weight: $bold;
+            font-size: 28px;
+        }
+
+        &.beige {
+            background: $black;
+            color: $white;
+        }
+
+        &.gray {
+            background: $black;
+            color: $white;
+        }
+
+        &.white {
+            background: $black;
+            color: $white;
+        }
+
+        &.dark {
+            background: $dark-beige;
+            color: $black;
+
+            .stat-icon {
+                color: $white;
+            }
+        }
+    }
+
+    // ----------------------------
+    // Responsive Adjustments
+    // ----------------------------
+    @media (max-width: 992px) {
+        padding: 30px 15px;
+
+        .welcome-box {
+            padding: 25px 15px;
+
+            p {
+                font-size: 15px;
+            }
+        }
+
+        .stat-card {
+            padding: 20px 15px;
+
+            h3 {
+                font-size: 24px;
+            }
+
+            .stat-icon {
+                font-size: 30px;
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 20px 10px;
+
+        .welcome-box {
+            padding: 20px 10px;
+
+            img {
+                width: 100px;
+                height: 100px;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        }
+
+        .stat-card {
+            padding: 15px 10px;
+
+            h3 {
+                font-size: 20px;
+            }
+
+            h5 {
+                font-size: 14px;
+            }
+
+            .stat-icon {
+                font-size: 25px;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Products
+// ======================
+.products-management {
+    width: 100%;
+    padding: 20px;
+
+    .form-check-input {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid $black;
+        border-radius: 6px;
+        background-color: $white;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.25s ease;
+
+        &:hover {
+            transform: scale(1.1);
+            border-color: darken($black, 10%);
+        }
+
+        &:checked {
+            background-color: $black;
+            border-color: $black;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 6px;
+                width: 5px;
+                height: 10px;
+                border: solid $white;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+                transition: all 0.2s ease;
+            }
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba($black, 0.2);
+        }
+    }
+
+    .view {
+        background-color: $black !important;
+        color: $white;
+        border: none !important;
+    }
+
+    // ----------------------------
+    // Search & Add Row
+    // ----------------------------
+    .search-add-row {
+        width: 100% !important;
+        margin-bottom: 40px !important;
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+        gap: 1rem;
+
+        // Search Input container
+        .search-product {
+            flex: 1;
+            border: 2px solid $dark-beige !important;
+            border-radius: 2rem !important;
+            padding: 0 !important;
+
+            input:focus,
+            input:active,
+            input:hover {
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            .btn {
+                border: none !important;
+                border-radius: 2rem !important;
+                color: $dark-beige !important;
+
+                &:hover {
+                    background: none !important;
+                    color: $black !important;
+                }
+            }
+
+            .search-input-group {
+                padding-left: 50px !important;
+
+                input {
+                    border: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+            }
+        }
+
+        // Add Product Button
+        .btn-add-product {
+            background-color: $black;
+            color: $white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-family: $font-body;
+            font-weight: $medium;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+            &:hover {
+                background-color: darken($black, 8%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: none;
+            }
+        }
+
+        // ✅ Responsive: make them under each other on small screens
+        @media (max-width: 768px) {
+            flex-direction: column;
+            width: 100% !important;
+
+            .search-product {
+                width: 100%;
+            }
+
+            .col-2 {
+                width: 100% !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .btn-add-product {
+                    width: 80% !important;
+                }
+            }
+        }
+    }
+
+    // ----------------------------
+    // Analytics Cards 
+    // ----------------------------
+    .analytics-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        // Each statistic card
+        .stat-card {
+            background: $white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba($black, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-family: $font-body;
+
+            // ✅ Hover effect for interactive feel
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 6px 16px rgba($black, 0.12);
+                background-color: $white;
+            }
+
+            h6 {
+                font-family: $font-heading;
+                font-weight: $bold;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                color: $dark-beige;
+            }
+
+            p {
+                font-size: 1.25rem;
+                font-weight: $medium;
+                margin: 0;
+                color: $black;
+            }
+        }
+
+        // ==============================
+        // Responsive: small screens
+        // ==============================
+        @media (max-width: 768px) {
+            flex-direction: column; // ✅ stack cards vertically
+            gap: 0.8rem;
+
+            .stat-card {
+                width: 100%; // full width
+                padding: 1rem;
+            }
+        }
+    }
+
+
+    // ----------------------------
+    // Products Table Wrapper (Cards for small screens)
+    // ----------------------------
+    .products-table {
+        background: $white;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 4px 12px rgba($black, 0.08);
+        overflow-x: auto;
+
+        table {
+            width: 100%;
+            margin: 0;
+
+            thead {
+                th {
+                    font-family: $font-heading;
+                    font-weight: $bold;
+                    font-size: 0.95rem;
+                    color: $black;
+                    padding: 0.75rem;
+                    white-space: nowrap;
+                }
+            }
+
+            tbody {
+                tr {
+                    td {
+                        .table-img {
+                            width: 100%;
+                            max-width: 150px;
+                            height: 110px;
+                            object-fit: cover;
+                            border-radius: 10px;
+                            box-shadow: 0 2px 6px rgba($black, 0.1);
+                        }
+
+                        .img-placeholder {
+                            width: 100%;
+                            max-width: 150px;
+                            height: 110px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 0.85rem;
+                            color: $dark-beige;
+                            background-color: $gray;
+                            border-radius: 10px;
+                        }
+
+                        .form-check input[type="checkbox"] {
+                            width: 18px;
+                            height: 18px;
+                        }
+
+                        .btn {
+                            font-size: 0.8rem;
+                            padding: 0.3rem 0.5rem;
+                            margin: 5px !important;
+                            border-radius: 8px;
+                            font-weight: $medium;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ==============================
+        // Responsive: small screens (cards)
+        // ==============================
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 1rem;
+                background: $white;
+                border-radius: 12px;
+                padding: 0.8rem 1rem;
+                box-shadow: 0 3px 10px rgba($black, 0.08);
+                border: none; // ✅ remove table lines
+            }
+
+            td {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.3rem 0;
+                border: none;
+
+                &:before {
+                    content: attr(data-label);
+                    font-weight: $bold;
+                    margin-bottom: 0.3rem;
+                    color: $dark-beige;
+                    font-family: $font-heading;
+                }
+
+                // ✅ Buttons row
+                .text-end {
+                    align-self: flex-start;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center !important;
+                    gap: 0.5rem; // Buttons next to each other
+                    margin-top: 0.5rem;
+                }
+
+                // Reduce image size for small card
+                .table-img,
+                .img-placeholder {
+                    max-width: 120px;
+                    height: 90px;
+                }
+            }
+
+            // ✅ Remove hover effect on cards
+            tr:hover {
+                background: none;
+            }
+        }
+    }
+
+    // ----------------------------
+    // Modal Style (Smaller size)
+    // ----------------------------
+    .modal-dialog {
+        max-width: 550px !important; // ✅ smaller modal
+        margin: 2rem auto;
+
+        .modal-content {
+            border-radius: 14px;
+            box-shadow: 0 6px 24px rgba($black, 0.15);
+        }
+
+        .modal-body img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+
+    // ----------------------------
+    // Responsive Design
+    // ----------------------------
+    @media (max-width: 576px) {
+        padding: 15px;
+
+        .products-table {
+            thead {
+                display: none;
+            }
+
+            tbody {
+                display: block;
+
+                tr {
+                    display: block;
+                    margin-bottom: 12px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                    background: $white;
+                    padding: 10px;
+                }
+
+                td {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 8px 6px;
+                    font-size: 14px;
+
+                    .table-img,
+                    .img-placeholder {
+                        width: 100%;
+                        max-width: 100%;
+                        height: 150px;
+                    }
+
+                    &::before {
+                        content: attr(data-label);
+                        font-weight: $bold;
+                        color: darken($gray, 40%);
+                        margin-right: 8px;
+                        display: inline-block;
+                        width: 40%;
+                        text-align: right;
+                        font-family: $font-body;
+                    }
+                }
+            }
+        }
+
+        // ✅ Smaller modal on mobile
+        .modal-dialog {
+            max-width: 90% !important;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Offers
+// ======================
+.offers-management-container {
+    font-family: $font-body;
+    padding: 1.5rem;
+
+    // ===============================
+    // Actions Bar (Filter + Add Button)
+    // ===============================
+    .offers-actions-bar {
+
+        .offers-filter-select {
+            font-family: $font-menu;
+            padding: 0.6rem 30px;
+            border-radius: 2rem !important;
+            border: 2px solid $dark-beige;
+            background-color: $white;
+            transition: all 0.3s ease;
+
+            &:hover,
+            &:active {
+                border-color: $dark-beige;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .btn-add-offer {
+            background-color: $black;
+            color: $white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: $font-body;
+            font-weight: $medium;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+            &:hover {
+                background-color: darken($black, 8%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: none;
+            }
+        }
+    }
+
+    // ===============================
+    // Offers Cards
+    // ===============================
+    .offers-cards-wrapper {
+        margin-top: 1rem;
+
+        .offer-card {
+            @include card-style;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .offer-card-title {
+                font-family: $font-heading;
+                font-weight: $bold;
+                @include responsive-font(1.2rem, 1rem);
+                color: $black;
+            }
+
+            .offer-card-desc {
+                font-size: 0.95rem;
+                font-weight: $regular;
+                color: darken($gray, 40%);
+            }
+
+            .offer-card-discount {
+                font-family: $font-slogans;
+                font-weight: $medium;
+                color: $dark-beige;
+                margin-bottom: 0.5rem;
+            }
+
+            .offer-card-dates,
+            .offer-card-status {
+                font-size: 0.9rem;
+                color: darken($gray, 50%);
+            }
+
+            .offer-card-img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 10px;
+                margin-bottom: 1rem;
+            }
+
+            .offer-card-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+
+                .btn-edit-offer {
+                    @include button-style($dark-beige, $black);
+                }
+
+                .btn-delete-offer {
+                    @include button-style(crimson);
+                }
+
+                .btn-toggle-status {
+                    @include button-style($black);
+                }
+            }
+        }
+    }
+
+    // ===============================
+    // Modal (Add/Edit Offer)
+    // ===============================
+    .offer-modal {
+        @include modal-size(550px);
+
+        .modal-content {
+            border-radius: 16px;
+            padding: 0.5rem;
+            background-color: $white;
+        }
+
+        .modal-header {
+            background-color: $beige;
+            border-bottom: none;
+            border-radius: 16px 16px 0 0;
+
+            .modal-title {
+                font-family: $font-heading;
+                font-weight: $bold;
+            }
+        }
+
+        .offer-form {
+            .offer-form-group {
+                margin-bottom: 1rem;
+
+                .offer-input {
+                    border-radius: 10px;
+                    border: 1px solid lighten($black, 70%);
+                    padding: 0.6rem;
+
+                    &:focus {
+                        border-color: $dark-beige;
+                        box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+                    }
+                }
+            }
+        }
+
+        .btn-save {
+            @include button-style($dark-beige, $black);
+        }
+
+        .btn-cancel {
+            @include button-style($gray, $black);
+        }
+    }
+
+    // ===============================
+    // Delete Confirmation Modal
+    // ===============================
+    .delete-confirm-modal {
+        @include modal-size(400px);
+
+        .modal-content {
+            border-radius: 14px;
+        }
+
+        .btn-confirm-delete {
+            @include button-style(crimson);
+        }
+
+        .btn-cancel-delete {
+            @include button-style($gray, $black);
+        }
+    }
+
+    // ===============================
+    // Custom Checkbox
+    // ===============================
+    input[type="checkbox"].offer-checkbox {
+        @include custom-checkbox($dark-beige, $black);
+        margin-right: 8px;
+        transform: translateY(2px);
+    }
+
+    // ===============================
+    // Responsive Adjustments
+    // ===============================
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .offers-actions-bar {
+
+            .col-md-2 {
+                width: 100% !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px !important;
+
+                button {
+                    width: 80% !important;
+                }
+            }
+        }
+
+        .offer-card {
+            flex-direction: column;
+            padding: 0.8rem;
+            gap: 0.4rem;
+
+            .offer-card-title {
+                font-size: 1rem;
+            }
+
+            .offer-card-desc {
+                font-size: 0.85rem;
+            }
+
+            .offer-card-img {
+                height: 150px;
+            }
+
+            // Buttons next to each other
+            .offer-card-actions {
+                flex-wrap: nowrap;
+                gap: 0.4rem;
+            }
+        }
+
+        .offer-modal .modal-dialog {
+            max-width: 90%;
+        }
+    }
+
+    // ===============================
+    // Dropdown Position Fix
+    // ===============================
+    select.offers-filter-select {
+        position: relative;
+        z-index: 5;
+
+        &::-ms-expand {
+            display: none;
+        }
+    }
+
+    select.offers-filter-select option {
+        background-color: $beige;
+        color: $black;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Orders
+// ======================
+.orders-management {
+    padding: 2rem;
+    background-color: $white;
+    font-family: $font-body;
+    min-height: 100vh;
+
+    // =====================
+    // Search & Add section
+    // =====================
+    .row {
+        align-items: center;
+    }
+
+    .orders-search {
+        font-family: $font-menu;
+        padding: 0.6rem 30px;
+        border-radius: 2rem !important;
+        border: 2px solid $dark-beige;
+        background-color: $white;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:active {
+            border-color: $dark-beige;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        &::placeholder {
+            color: rgba($black, 0.6);
+        }
+
+        @include respond(xs) {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    .orders-add-btn {
+        background-color: $black;
+        color: $white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-family: $font-body;
+        font-weight: $medium;
+        font-size: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+        &:hover {
+            background-color: darken($black, 8%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        @include respond(xs) {
+            width: 100%;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    // =====================
+    // Orders Cards Section
+    // =====================
+    .orders-cards-wrapper {
+        margin-top: 1rem;
+
+        .order-card {
+            background-color: lighten($gray, 5%);
+            border: 1px solid lighten($black, 85%);
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 0.5rem;
+            @include transition(0.2s);
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 15px rgba($black, 0.08);
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                gap: 0.6rem;
+            }
+
+            .card-title {
+                font-family: $font-heading;
+                font-weight: 700;
+                color: $dark-beige;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.95rem;
+                color: rgba($black, 0.8);
+                margin-bottom: 0.4rem;
+            }
+
+            strong {
+                color: $black;
+            }
+
+            .btn {
+                font-weight: 600;
+                border-radius: 10px;
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .order-edit-btn {
+                border-color: $dark-beige;
+                color: $dark-beige;
+
+                &:hover {
+                    background-color: $dark-beige;
+                    color: $white;
+                }
+            }
+
+            .order-view-btn {
+                border-color: #0d6efd;
+                color: #0d6efd;
+
+                &:hover {
+                    background-color: #0d6efd;
+                    color: $white;
+                }
+            }
+
+            .order-delete-btn {
+                border-color: #dc3545;
+                color: #dc3545;
+
+                &:hover {
+                    background-color: #dc3545;
+                    color: $white;
+                }
+            }
+        }
+
+        .text-muted {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        @include respond(xs) {
+            .order-card {
+                .card-title {
+                    font-size: 1rem;
+                }
+
+                .card-text {
+                    font-size: 0.85rem;
+                }
+
+                .btn {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+
+    // =====================
+    // Modals (Add/Edit/View/Delete)
+    // =====================
+    .modal-content {
+        border-radius: 15px;
+        font-family: $font-body;
+
+        .modal-title {
+            font-weight: 700;
+            color: $dark-beige;
+        }
+
+        .btn-primary {
+            background-color: $dark-beige;
+            border: none;
+
+            &:hover {
+                background-color: darken($dark-beige, 8%);
+            }
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+
+            &:hover {
+                background-color: darken(#dc3545, 8%);
+            }
+        }
+
+        @include respond(xs) {
+            padding: 1rem;
+
+            .modal-title {
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    // =====================
+    // Order Items inside Modal
+    // =====================
+    .order-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+
+        .order-item-select,
+        .order-item-quantity,
+        .order-item-price {
+            flex: 1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .order-item-remove {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 0.3rem 0.7rem;
+        }
+
+        @include respond(xs) {
+            flex-direction: column;
+            align-items: stretch;
+
+            .order-item-remove {
+                width: 100%;
+            }
+        }
+    }
+
+    .order-total {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: $dark-beige;
+        text-align: end;
+        margin-top: 0.8rem;
+    }
+
+    @include respond(xs) {
+        padding: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Reservations
+// ======================
+.reservations-management {
+    font-family: $font-body;
+    color: $black;
+    background-color: $white;
+    padding: 2rem;
+
+    .col {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    // Analytics Section
+    .analytics-card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba($black, 0.06);
+        background: $white;
+        text-align: center;
+        padding: 1.25rem;
+        @include transition();
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba($black, 0.1);
+        }
+
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: lighten($black, 30%);
+            margin-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: $dark-beige;
+        }
+
+        &.pending {
+            border-top: 4px solid #ffc107;
+        }
+
+        &.confirmed {
+            border-top: 4px solid #28a745;
+        }
+
+        &.cancelled {
+            border-top: 4px solid #dc3545;
+        }
+
+        @include respond(xs) {
+            padding: 1rem;
+            margin-bottom: 1rem;
+
+            h5 {
+                font-size: 0.9rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+    // Filter Dropdown
+    .filter-reservations {
+        border: 2px solid $dark-beige;
+        border-radius: 2rem;
+        padding: 0.8rem 2.5rem 0.8rem 1.2rem;
+        max-width: 600px;
+        width: 100%;
+        background-color: $white;
+        transition: all 0.3s ease;
+        font-family: $font-body;
+        font-weight: 500;
+        color: $black;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23000000' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 16px;
+
+        &:focus {
+            border-color: darken($dark-beige, 10%);
+            box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+            outline: none;
+        }
+
+        option {
+            background-color: $beige;
+            color: $black;
+        }
+
+        @include respond(xs) {
+            font-size: 0.9rem;
+            padding: 0.6rem 2rem 0.6rem 1rem;
+        }
+    }
+
+    // Table
+    .reservations-table {
+        width: 100%;
+        margin-top: 1rem;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+
+        thead {
+            background-color: $gray;
+
+            th {
+                font-family: $font-heading;
+                font-weight: 700;
+                text-align: center;
+                color: $black;
+                padding: 1rem;
+            }
+        }
+
+        tbody {
+            tr {
+                background-color: lighten($gray, 2%);
+                border-radius: 12px;
+                @include transition(0.25s);
+
+                &:hover {
+                    background-color: lighten($gray, 8%);
+                }
+
+                td {
+                    text-align: center;
+                    padding: 0.9rem 1rem;
+                    vertical-align: middle;
+                    font-size: 0.95rem;
+                    color: $black;
+
+                    select {
+                        border: 2px solid $dark-beige;
+                        border-radius: 2rem;
+                        font-family: $font-body;
+                        font-size: 0.95rem;
+                        padding: 0.7rem 2.5rem 0.7rem 1.2rem;
+                        width: 100%;
+                        background-color: $white;
+                        transition: all 0.3s ease;
+                        color: $black;
+                        appearance: none;
+                        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23000000' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+                        background-repeat: no-repeat;
+                        background-position: right 1rem center;
+                        background-size: 16px;
+
+                        &:focus {
+                            border-color: darken($dark-beige, 10%);
+                            box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+                            outline: none;
+                        }
+
+                        &::placeholder {
+                            color: rgba($black, 0.6);
+                        }
+                    }
+
+                    button {
+                        border-radius: 8px;
+                        font-weight: 600;
+                        font-family: $font-menu;
+                        padding: 0.4rem 0.8rem;
+                        @include transition();
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+                }
+
+                &:last-child td {
+                    border-bottom: none;
+                }
+            }
+
+            .text-muted {
+                font-style: italic;
+                color: $dark-beige !important;
+            }
+        }
+
+        @include respond(xs) {
+            font-size: 0.85rem;
+
+            thead th {
+                padding: 0.6rem;
+            }
+
+            tbody td {
+                padding: 0.6rem;
+            }
+        }
+    }
+
+    // Mobile Cards
+    .card {
+        border: 1px solid $gray;
+        border-radius: 12px;
+        background-color: $white;
+        @include transition();
+
+        &:hover {
+            box-shadow: 0 4px 10px rgba($black, 0.08);
+        }
+
+        .card-body {
+            padding: 1rem;
+
+            h6 {
+                font-family: $font-heading;
+                font-weight: 700;
+                color: $black;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                margin-bottom: 0.3rem;
+                font-size: 0.9rem;
+                color: darken($black, 10%);
+            }
+
+            select {
+                border: 2px solid $dark-beige;
+                border-radius: 2rem;
+                font-family: $font-body;
+                font-size: 0.95rem;
+                padding: 0.4rem 2em 0.4rem 1rem;
+                width: 100%;
+                background-color: $white;
+                transition: all 0.3s ease;
+                color: $black;
+                appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23000000' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 1rem center;
+                background-size: 16px;
+
+                &:focus {
+                    border-color: darken($dark-beige, 10%);
+                    box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: rgba($black, 0.6);
+                }
+            }
+
+            button {
+                margin-top: 0.6rem;
+                border-radius: 10px;
+                font-weight: 600;
+                width: 100%;
+            }
+        }
+
+        @include respond(xs) {
+            margin-bottom: 1rem;
+
+            .card-body {
+                h6 {
+                    font-size: 1rem;
+                }
+
+                p {
+                    font-size: 0.85rem;
+                }
+            }
+        }
+    }
+
+    @include respond(xs) {
+        padding: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Dashboard Messages
+// ======================
+.messages-management {
+    font-family: $font-body;
+    padding: 1.5rem;
+
+    // ===============================
+    // Search Bar
+    // ===============================
+    .search-row {
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-bottom: 2rem;
+
+        .col-md-8 {
+            display: flex;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        .message-search-input {
+            border: 2px solid $dark-beige;
+            border-radius: 2rem;
+            padding: 0.8rem 1.2rem;
+            max-width: 600px;
+            width: 100%;
+            background-color: $white;
+            transition: all 0.3s ease;
+            font-family: $font-body;
+
+            &:focus {
+                border-color: darken($dark-beige, 10%);
+                box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+                outline: none;
+            }
+
+            &::placeholder {
+                color: rgba($black, 0.6);
+            }
+        }
+    }
+
+    // ===============================
+    // Table Styling (Desktop)
+    // ===============================
+    .messages-table {
+        width: 100%;
+        border-radius: 1rem;
+        overflow: hidden;
+        background-color: $white;
+
+        thead {
+            background-color: $beige;
+
+            th {
+                font-weight: 600;
+                font-family: $font-heading;
+                text-align: center;
+                padding: 0.8rem;
+            }
+
+            th:nth-child(2) {
+                width: 60% !important;
+            }
+
+            th:nth-child(4) {
+                width: 20% !important;
+            }
+        }
+
+        tbody {
+            tr {
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: lighten($beige, 10%);
+                }
+
+                td {
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 0.75rem;
+                    font-size: 0.95rem;
+                }
+
+                button {
+                    @include button-style($black);
+                    padding: 0.35rem 0.8rem;
+                    margin: 0 5px !important;
+                    font-size: 0.85rem;
+
+                    &.delete-btn {
+                        border: 1px solid #dc3545;
+                        color: #dc3545;
+                        background: none;
+
+                        &:hover {
+                            background-color: #dc3545;
+                            color: $white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ===============================
+    // Mobile Cards
+    // ===============================
+    .message-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+
+        .message-card {
+            border: 2px solid $dark-beige;
+            border-radius: 1.5rem;
+            background-color: $white;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            .card-body {
+                padding: 1.2rem;
+
+                h6 {
+                    font-family: $font-heading;
+                    font-weight: 600;
+                    color: $black;
+                    margin-bottom: 0.5rem;
+                }
+
+                .small {
+                    color: darken($black, 20%);
+                    font-size: 0.9rem;
+                    margin-bottom: 0.75rem;
+                }
+
+                .card-actions {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    button {
+                        flex: 1;
+                        @include button-style($black);
+                        padding: 0.4rem 0.8rem;
+                        font-size: 0.85rem;
+
+                        &.btn-outline-danger {
+                            border: 1px solid #dc3545;
+                            color: #dc3545;
+                            background: none;
+
+                            &:hover {
+                                background-color: #dc3545;
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ===============================
+    // Modals
+    // ===============================
+    .message-modal,
+    .confirm-modal {
+        .modal-dialog {
+            max-width: 500px;
+        }
+
+        .modal-content {
+            border-radius: 1rem;
+            border: 2px solid $dark-beige;
+            background-color: $white;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background-color: $beige;
+            border-bottom: 1px solid lighten($dark-beige, 20%);
+            border-radius: 1rem 1rem 0 0;
+
+            .modal-title {
+                font-family: $font-heading;
+                font-weight: 600;
+                color: $black;
+            }
+
+            .btn-close {
+                filter: invert(0);
+            }
+        }
+
+        .modal-body {
+            p {
+                margin-bottom: 0.5rem;
+                color: darken($black, 10%);
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            strong {
+                color: $black;
+            }
+        }
+
+        .modal-footer {
+            border-top: 1px solid lighten($dark-beige, 20%);
+        }
+    }
+
+    // ===============================
+    // Responsive Layout
+    // ===============================
+    @media (max-width: 768px) {
+        .message-search-input {
+            width: 100%;
+            max-width: none;
+        }
+
+        .message-card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// FAQ Management
+// ======================
+.faq-management-container {
+    font-family: $font-body;
+    padding: 1.5rem;
+
+    // ===============================
+    // Actions Bar (Filter + Add Button)
+    // ===============================
+    .faq-actions-bar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+
+        // Dropdown Filter
+        .faq-filter-select {
+            @include custom-dropdown($white, $black, $beige);
+            width: 100%;
+            max-width: 280px;
+            padding: 0.6rem 30px;
+            border-radius: 2rem;
+            border: 2px solid $dark-beige;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                border-color: darken($dark-beige, 10%);
+            }
+
+            // Custom dropdown menu look
+            &::-ms-expand {
+                display: none;
+            }
+
+            option {
+                background-color: $beige;
+                color: $black;
+                font-family: $font-body;
+            }
+        }
+
+        // Add FAQ button
+        .btn-add-faq {
+            @include button-style($black);
+            width: 100%;
+            max-width: 280px;
+        }
+
+        // Responsive Layout
+        @media (max-width: 768px) {
+            flex-direction: column;
+
+            .faq-filter-select,
+            .btn-add-faq {
+                width: 100%;
+            }
+        }
+    }
+
+    // ===============================
+    // FAQ Cards
+    // ===============================
+    .faq-cards-wrapper {
+        margin-top: 1rem;
+
+        .faq-card {
+            @include card-style;
+            padding: 1rem;
+
+            .faq-card-question {
+                font-family: $font-heading;
+                font-weight: $bold;
+                @include responsive-font(1.1rem, 1rem);
+                color: $black;
+                margin-bottom: 0.5rem;
+            }
+
+            .faq-card-answer {
+                font-size: 0.95rem;
+                color: darken($gray, 40%);
+                line-height: 1.6;
+            }
+
+            // Actions (Edit / Delete)
+            .faq-card-actions {
+                margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+
+                .btn-edit-faq {
+                    @include button-style($dark-beige, $black);
+                }
+
+                .btn-delete-faq {
+                    @include button-style(crimson);
+                }
+            }
+        }
+    }
+
+    // ===============================
+    // Add/Edit Modal
+    // ===============================
+    .faq-modal {
+        @include modal-size(500px);
+
+        .modal-content {
+            border-radius: 14px;
+            padding: 1rem;
+            background-color: $white;
+        }
+
+        .modal-header {
+            background-color: $beige;
+            border-bottom: none;
+            border-radius: 14px 14px 0 0;
+
+            .modal-title {
+                font-family: $font-heading;
+                font-weight: $bold;
+            }
+        }
+
+        .faq-form {
+            .faq-form-group {
+                margin-bottom: 1rem;
+
+                label {
+                    font-weight: $medium;
+                    color: $black;
+                    margin-bottom: 0.3rem;
+                    display: block;
+                }
+
+                .faq-input,
+                .faq-textarea {
+                    width: 100%;
+                    border-radius: 10px;
+                    border: 1px solid lighten($black, 70%);
+                    padding: 0.6rem;
+
+                    &:focus {
+                        border-color: $dark-beige;
+                        box-shadow: 0 0 0 0.2rem rgba($dark-beige, 0.25);
+                    }
+                }
+
+                .faq-textarea {
+                    min-height: 120px;
+                    resize: vertical;
+                }
+            }
+        }
+
+        .btn-save {
+            @include button-style($dark-beige, $black);
+        }
+
+        .btn-cancel {
+            @include button-style($gray, $black);
+        }
+    }
+
+    // ===============================
+    // Responsive Adjustments
+    // ===============================
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .faq-card {
+            .faq-card-question {
+                font-size: 1rem;
+            }
+
+            .faq-card-answer {
+                font-size: 0.85rem;
+            }
+        }
+
+        .faq-modal .modal-dialog {
+            max-width: 90%;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Reviews Management
+// ======================
+.reviews-container {
+    font-family: $font-body;
+    padding: 1.5rem;
+
+    // ===============================
+    // Search & Filter Bar
+    // ===============================
+    .search-filter-bar {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 0 auto 1.5rem auto;
+        max-width: 900px; // ✅ علشان تبقى في نص الصفحة بشكل أنيق
+
+        .review-search-input {
+            border: 2px solid $dark-beige;
+            border-radius: 2rem;
+            padding: 0.6rem 1rem;
+            transition: all 0.3s ease;
+
+            &:focus {
+                border-color: darken($dark-beige, 10%);
+                box-shadow: 0 0 0 0.15rem rgba($dark-beige, 0.25);
+            }
+        }
+
+        // Dropdown Filter
+        .review-filter-dropdown {
+            width: 100%;
+            align-self: flex-end;
+
+            .review-filter-toggle {
+                @include custom-dropdown($white, $black, $beige);
+                border-radius: 2rem;
+                border: 2px solid $dark-beige;
+                width: 100%;
+                padding: 0.6rem 1rem;
+                text-align: center;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: darken($dark-beige, 10%);
+                    background-color: lighten($beige, 5%);
+                }
+            }
+
+            .review-filter-menu {
+                background-color: $beige;
+                border: 1px solid $dark-beige;
+                border-radius: 1rem;
+                margin-top: 0.4rem;
+                width: 100%;
+                overflow: hidden;
+
+                .dropdown-item {
+                    color: $black;
+                    font-family: $font-body;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background-color: $dark-beige;
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        // Responsive Layout
+        @media (min-width: 768px) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .review-search-input {
+                max-width: 100%;
+            }
+
+            .review-filter-dropdown {
+                max-width: 100%;
+            }
+        }
+    }
+
+
+    // ===============================
+    // Review Cards
+    // ===============================
+    .review-card {
+        border: 1px solid $beige;
+        border-radius: 1rem;
+        overflow: hidden;
+        background-color: $white;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba($black, 0.1);
+        }
+
+        .review-card-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .review-date {
+                font-size: 0.85rem;
+            }
+
+            .review-badge {
+                font-size: 0.85rem;
+                border-radius: 1rem;
+                padding: 0.3rem 0.6rem;
+                margin-left: 10px !important;
+                background-color: $beige !important;
+                color: $black;
+            }
+        }
+
+        .review-comment {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .review-btn {
+            @include button-style($black);
+            width: 100%;
+            border-radius: 2rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    // ===============================
+    // Review Modal
+    // ===============================
+    .modal-content {
+        border-radius: 1rem;
+        border: 2px solid $dark-beige;
+        background-color: $beige;
+
+        .modal-header {
+            border-bottom: none;
+            background-color: $dark-beige;
+            color: $white;
+            border-radius: 1rem 1rem 0 0;
+
+            .modal-title {
+                font-family: $font-heading;
+                font-size: 1.25rem;
+            }
+        }
+
+        .modal-body {
+            background-color: $white;
+            border-radius: 0 0 1rem 1rem;
+            padding: 1.5rem;
+
+            h5 {
+                font-family: $font-heading;
+                color: $black;
+            }
+
+            p {
+                margin-bottom: 0.5rem;
+            }
+
+            .review-featured-btn {
+                @include button-style($dark-beige);
+                width: 100%;
+                border-radius: 2rem;
+                font-weight: 600;
+            }
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 1rem;
+
+            .review-close-btn {
+                @include button-style($black);
+                width: 100%;
+                border-radius: 2rem;
+            }
+        }
+    }
+
+    // ===============================
+    // Responsiveness
+    // ===============================
+    @media (max-width: 768px) {
+        .search-filter-bar {
+            flex-direction: column;
+
+            .review-search-input,
+            .review-filter-dropdown {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .modal-content {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======================
+// Statistics Management
+// ======================
+.statistics-management {
+    font-family: $font-body;
+    padding: 1.5rem;
+
+    // ===============================
+    // Page Title
+    // ===============================
+    h3 {
+        font-family: $font-heading;
+        color: $black;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    // ===============================
+    // KPI Cards Section
+    // ===============================
+    .card {
+        border-radius: 1rem;
+        border: 1px solid $beige;
+        background-color: $white;
+        transition: all 0.3s ease;
+        text-align: center;
+        cursor: default;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 10px rgba($black, 0.1);
+        }
+
+        h5 {
+            font-family: $font-heading;
+            color: $dark-beige;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-weight: 700;
+            color: $black;
+        }
+    }
+
+    // ===============================
+    // Pie Charts Section
+    // ===============================
+    .recharts-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .recharts-legend-wrapper {
+        font-family: $font-body;
+        font-size: 0.9rem;
+    }
+
+    .card h5 {
+        text-align: center;
+        margin-bottom: 1rem;
+        color: $dark-beige;
+    }
+
+    // ===============================
+    // Latest Items Section
+    // ===============================
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            font-family: $font-body;
+            font-size: 0.95rem;
+            color: $black;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid $gray;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .badge {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.6rem;
+                border-radius: 1rem;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    // ===============================
+    // Loading Spinner
+    // ===============================
+    .spinner-border {
+        color: $dark-beige;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    // ===============================
+    // Responsive Layout
+    // ===============================
+    @media (max-width: 992px) {
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h5 {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        ul li {
+            font-size: 0.9rem;
+        }
+
+        .recharts-wrapper {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h3 {
+            font-size: 1.3rem;
+        }
+
+        .card {
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    }
+}

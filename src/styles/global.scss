@@ -1,0 +1,2599 @@
+// ========================================================= //
+// Imports
+// ========================================================= //
+@import "./variables.scss"; // Project variables (colors, fonts, sizes)
+@import "./mixins.scss"; // Reusable mixins for transitions, responsiveness, etc.
+
+
+// ========================================================= //
+// Reset & Global Styles
+// ========================================================= //
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; // Ensures padding & border are included in element width/height
+}
+
+html,
+body {
+    font-family: $font-body;
+    background-color: $white;
+    color: $black;
+    direction: rtl; // Right-to-left direction since the site is in Arabic
+}
+
+a {
+    text-decoration: none;
+    color: inherit; // Inherit parent color for links
+}
+
+
+// ========================================================= //
+// Buttons
+// ========================================================= //
+.btn-main {
+    background: #c49a6c; // Light golden/coffee color
+    color: $white;
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background: $beige; // Darker tone on hover
+        color: $black;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: scale(0.96);
+        box-shadow: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Header (Navigation Bar)
+// ========================================================= //
+.custom-navbar {
+    background-color: $white;
+    padding: 1rem 0;
+    font-family: $font-body;
+    border-bottom: 1px solid $gray;
+
+    // Logo styles
+    .logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid $black;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    // Navigation links
+    .nav-links {
+        display: flex;
+        align-items: center;
+
+        .nav-link {
+            font-family: $font-menu;
+            font-weight: $medium;
+            color: $black;
+            margin: 0 1rem;
+            position: relative;
+            @include transition();
+
+            &:hover {
+                color: $dark-beige;
+            }
+
+            // Underline effect on hover
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: $beige;
+                @include transition();
+            }
+
+            &:hover::after {
+                width: 100%;
+            }
+
+            // 🔹 Active link styling
+            &.active-link {
+                color: $dark-beige; // Active text color
+                font-weight: $bold;
+
+                &::after {
+                    width: 100%; // Show underline by default
+                    background: $dark-beige;
+                }
+            }
+        }
+    }
+
+    // Contact button in navbar
+    .contact-btn {
+        font-family: $font-heading;
+        font-weight: $bold;
+        background-color: $black;
+        border: none;
+        border-radius: 2rem;
+        padding: 0.5rem 1.5rem;
+        color: $white;
+        @include transition();
+
+        &:hover {
+            background-color: $beige;
+            color: $black;
+        }
+    }
+
+    // ========================= //
+    // Responsive Styles (Small Screens)
+    // ========================= //
+    @media (max-width: 991px) {
+
+        // Align links vertically in mobile menu
+        .nav-links {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem 0;
+
+            .nav-link {
+                margin: 0.5rem 0; // spacing between links
+                width: 100%; // make links stretch for better touch target
+            }
+        }
+
+        // Style the toggle button (hamburger)
+        .navbar-toggler {
+            border: none;
+            outline: none;
+            box-shadow: none;
+
+            // Hamburger icon customization
+            &-icon {
+                filter: invert(0.3); // make it slightly darker
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        // Adjust CTA button inside collapse
+        .contact-btn {
+            margin-top: 1rem;
+            width: 100%; // full width for mobile
+            text-align: center;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Footer
+// ========================================================= //
+.custom-footer {
+    background-color: $black;
+    color: $white;
+    padding: 5rem 0 3rem 0;
+    font-family: $font-body;
+
+    // -----------------------------
+    // Footer Logo Section
+    // -----------------------------
+    .footer-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid $beige;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    // Footer description text
+    .footer-desc {
+        font-family: $font-slogans;
+        font-size: 1.1rem;
+        width: 80% !important;
+        color: $gray;
+        line-height: 1.8;
+        margin-top: 1rem;
+    }
+
+    // -----------------------------
+    // Footer Navigation Links
+    // -----------------------------
+    .footer-links {
+        h5 {
+            font-family: $font-heading;
+            font-weight: $bold;
+            color: $dark-beige;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin: 0.8rem 0;
+
+                a {
+                    color: $white;
+                    text-decoration: none;
+                    font-weight: $medium;
+                    @include transition();
+
+                    &:hover {
+                        color: $beige;
+                    }
+
+                    // Active link styling
+                    &.active-link {
+                        font-weight: $bold;
+                        color: $beige;
+                    }
+                }
+            }
+        }
+    }
+
+    // -----------------------------
+    // Social Media & CTA Button
+    // -----------------------------
+    .footer-social {
+        h5 {
+            font-family: $font-heading;
+            font-weight: $bold;
+            color: $dark-beige;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+
+            a {
+                color: $white;
+                font-size: 1.3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: transparent;
+                @include transition();
+
+                &:hover {
+                    background-color: $beige;
+                    color: $black;
+                }
+            }
+        }
+
+        .contact-btn {
+            font-family: $font-heading;
+            font-weight: $bold;
+            background-color: $beige;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            color: $black;
+            margin-top: 1rem;
+            @include transition();
+
+            &:hover {
+                background-color: $white;
+                color: $black;
+            }
+        }
+    }
+
+    // -----------------------------
+    // Copyright
+    // -----------------------------
+    .copyright {
+        font-size: 0.9rem;
+        color: $gray;
+        margin-top: 1.5rem;
+    }
+}
+
+// ========================== //
+// Responsive Design
+// ========================== //
+
+// -----------------------------
+// Tablets (max-width: 768px)
+// -----------------------------
+@media (max-width: 768px) {
+    .custom-footer {
+        padding: 3rem 1rem 2rem 1rem;
+        text-align: center;
+
+        .footer-desc {
+            width: 100% !important;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 1rem auto 0 auto;
+        }
+
+        .footer-links {
+            margin: 40px 0 !important;
+        }
+
+        .footer-links ul li {
+            margin: 0.5rem 0;
+        }
+
+        .footer-social .social-icons {
+            justify-content: center;
+        }
+
+        .footer-social .contact-btn {
+            width: 100%; // Full width CTA on tablet
+            padding: 0.5rem 1.2rem;
+        }
+    }
+}
+
+// -----------------------------
+// Mobile (max-width: 480px)
+// -----------------------------
+@media (max-width: 480px) {
+    .custom-footer {
+        .footer-logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .footer-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer-links h5 {
+            font-size: 1.3rem;
+        }
+
+        .footer-links ul li a {
+            font-size: 0.9rem;
+        }
+
+        .footer-social .social-icons a {
+            font-size: 1.1rem;
+            width: 35px;
+            height: 35px;
+        }
+
+        .footer-social .contact-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// ✅ HOME PAGE STYLES – FULLY OPTIMIZED & RESPONSIVE
+// ========================================================= //
+
+// ==============================
+// Global Section Divider
+// ==============================
+.section-divider {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #222;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 1.6rem;
+    }
+}
+
+.section-btn {
+    background-color: $black !important;
+    color: $white !important;
+    border: none;
+    border-radius: 2.5rem;
+    padding: 0.9rem 2.4rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+
+    &:hover {
+        background-color: $beige !important;
+        color: $black !important;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 576px) {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+// ==============================
+// HERO SECTION
+// ==============================
+.hero-carousel {
+    position: relative;
+
+    .hero-slide {
+        position: relative;
+        height: 75vh;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.75);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+
+            @media (max-width: 992px) {
+                font-size: 2.3rem;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 1.9rem;
+            }
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+
+            @media (max-width: 768px) {
+                font-size: 1.1rem;
+            }
+        }
+
+        .hero-btn {
+            background: $dark-beige;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #fff;
+                color: #222;
+            }
+        }
+    }
+
+    .carousel-indicators {
+        display: none;
+    }
+}
+
+// ==============================
+// ABOUT PREVIEW SECTION
+// ==============================
+.about-preview {
+    text-align: center;
+
+    .about-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        color: #555;
+
+        @media (max-width: 768px) {
+            font-size: 1rem;
+        }
+    }
+
+    .about-btn {
+        background: #222;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        margin-bottom: 50px !important;
+        border-radius: 2rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: $dark-beige;
+            color: #fff;
+        }
+    }
+}
+
+// ==============================
+// QUICK MENU SECTION (FEATURED PRODUCTS)
+// ==============================
+.quick-menu {
+    margin: 50px 0;
+
+    .menu-card {
+        border: 1px solid #eee;
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: #fff;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            height: 230px;
+            width: 100%;
+            object-fit: cover;
+
+            @media (max-width: 576px) {
+                height: 200px;
+            }
+        }
+
+        .card-body {
+            text-align: center;
+
+            .card-title {
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-bottom: 0.8rem;
+            }
+
+            .card-text {
+                font-size: 1rem;
+                color: #555;
+                min-height: 60px;
+            }
+
+            button {
+                font-weight: bold;
+                background-color: $dark-beige !important;
+                color: $white;
+                border: none;
+                border-radius: 2rem !important;
+                width: 60%;
+                height: 45px;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: $beige !important;
+                    color: $black;
+                }
+            }
+        }
+    }
+}
+
+// =============================
+// Quote Section Styles
+// =============================
+
+// Variables
+$white: #fff;
+$overlay-dark: rgba(0, 0, 0, 0.6);
+$font-family-arabic: 'Cairo', sans-serif;
+
+.quote-section {
+    position: relative;
+    background: url("../assets/images/dibo7.jpg") center/cover no-repeat;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+
+    // Overlay covers the entire section
+    .quote-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $overlay-dark;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        z-index: 1;
+    }
+
+    // Text content should appear above the overlay
+    .text-center {
+        position: relative;
+        z-index: 2;
+    }
+
+    // Quote text style
+    .quote-text {
+        color: $white;
+        font-family: $font-family-arabic;
+        font-size: 1.8rem;
+        font-weight: 600;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    // Author text style
+    .quote-author {
+        color: $white;
+        font-family: $font-family-arabic;
+        font-size: 1.2rem;
+        opacity: 0.85;
+        font-style: italic;
+        letter-spacing: 1px;
+        animation: fadeInUp 1.2s ease-in-out;
+    }
+}
+
+// =============================
+// Animations
+// =============================
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+// =====================================
+// ✅ Carousel Controls - Outside Layout + Responsive Under Cards
+// =====================================
+.custom-carousel {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+
+    .carousel-inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    // Controls - Default (desktop)
+    .carousel-controls {
+        position: absolute;
+        top: 50%;
+        left: -3rem;
+        right: -3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transform: translateY(-50%);
+        z-index: 2;
+        pointer-events: none;
+
+        button {
+            pointer-events: all;
+            background-color: rgba(0, 0, 0, 0.248) !important;
+            color: $white !important;
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: $beige !important;
+                color: $black !important;
+                transform: scale(1.1);
+            }
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    // ✅ Tablet
+    @media (max-width: 992px) {
+        .carousel-controls {
+            left: -2rem;
+            right: -2rem;
+
+            button {
+                width: 46px;
+                height: 46px;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    // ✅ Mobile - move controls under cards
+    @media (max-width: 768px) {
+        .carousel-controls {
+            position: static;
+            margin-top: 1rem;
+            justify-content: center;
+            gap: 1rem;
+            transform: none;
+            pointer-events: all;
+
+            button {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+                background-color: rgba(0, 0, 0, 0.75) !important;
+                color: $white !important;
+
+                &:hover {
+                    background-color: $beige !important;
+                    color: $black !important;
+                }
+            }
+        }
+    }
+
+    // ✅ Small screens
+    @media (max-width: 576px) {
+        .carousel-controls {
+            gap: 0.75rem;
+
+            button {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+// ==============================
+// OFFERS SECTION (Improved Responsive Layout)
+// ==============================
+.offers {
+    margin: 50px 0;
+
+    .offer-box {
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #eee;
+        padding: 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: #fff;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: $dark-beige !important;
+            color: #fff !important;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: $beige !important;
+                color: $black !important;
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        .offer-box {
+            padding: 1.8rem;
+
+            h3 {
+                font-size: 1.3rem;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .offer-box {
+            min-height: auto;
+            padding: 1.5rem;
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        .offer-box {
+            padding: 1.2rem;
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            p {
+                font-size: 0.85rem;
+            }
+        }
+    }
+}
+
+// ==============================
+// TESTIMONIALS SECTION
+// ==============================
+.testimonials {
+    position: relative;
+    background: url("../assets/images/dibo8.jpg") center/cover no-repeat;
+    color: #fff;
+    padding: 0;
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 4rem 0;
+    }
+
+    h2 {
+        color: $white;
+    }
+
+    .testimonial-card {
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        color: #222;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: $dark-beige;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #444;
+        }
+
+        h6 {
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #000;
+        }
+    }
+
+    .review-btn {
+        background-color: $dark-beige !important;
+        color: $white;
+        border: none;
+        font-weight: bold;
+        border-radius: 2rem;
+        padding: 0.8rem 1.5rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $black !important;
+            color: $white !important;
+            transform: translateY(-2px);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// About Page
+// ========================================================= //
+.about-page {
+    .section-divider {
+        border-bottom: 1px solid #eaeaea;
+        padding: 4rem 0;
+        background: #fff;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        text-align: start !important;
+        color: #222;
+    }
+
+    .section-desc {
+        font-size: 1.3rem;
+        color: #444;
+        line-height: 2;
+    }
+
+    .section-img {
+        border-radius: 1rem;
+        object-fit: cover;
+        width: 100%;
+        height: 300px;
+    }
+
+    // Video Section
+    .video-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    // Gallery Section
+    .gallery-img {
+        border-radius: 1rem;
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-stats {
+
+        .stat-card {
+            min-height: 150px !important;
+            background-color: $black !important;
+            color: $white !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            h3 {
+                color: $dark-beige !important;
+            }
+        }
+    }
+
+    // Team Section
+    .team-card {
+        background-color: $black;
+        border: 1px solid #eee;
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: 0.3s;
+
+        .card-body {
+            padding: 30px 0 0 0 !important;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 30px !important;
+            color: $white !important;
+        }
+
+        .card-text {
+            background-color: $dark-beige !important;
+            color: $white !important;
+            font-family: $font-body !important;
+            font-size: 1rem;
+            padding: 20px !important;
+        }
+    }
+
+    // =========================================================
+    // MEDIA QUERIES
+    // =========================================================
+
+    // ------------- Tablets -------------
+    @media (max-width: 992px) {
+        .section-divider {
+            padding: 3rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            padding: 0 1rem;
+        }
+
+        .section-img {
+            height: 260px;
+        }
+
+        .video-wrapper iframe {
+            height: 360px;
+        }
+
+        .gallery-img {
+            height: 240px;
+        }
+
+        .team-card img {
+            height: 220px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+        }
+
+        .card-text {
+            font-size: 1rem;
+        }
+    }
+
+    // ------------- Large Mobiles -------------
+    @media (max-width: 768px) {
+        .section-divider {
+            padding: 2.5rem 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .section-img {
+            height: 220px;
+        }
+
+        .video-wrapper iframe {
+            height: 280px;
+        }
+
+        .gallery-img {
+            height: 200px;
+        }
+
+        .team-grid {
+            gap: 1rem;
+        }
+
+        .team-card img {
+            height: 200px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+        }
+    }
+
+    // ------------- Small Mobiles -------------
+    @media (max-width: 480px) {
+        .section-divider {
+            padding: 2rem 0.8rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-right: 15px !important;
+        }
+
+        .section-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .section-img {
+            height: 180px;
+            margin-bottom: 20px !important;
+        }
+
+        .video-wrapper iframe {
+            height: 200px;
+        }
+
+        .gallery-grid {
+            gap: 0.8rem;
+        }
+
+        .gallery-img {
+            height: 160px;
+        }
+
+        .team-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .team-card {
+            .card-body {
+                padding: 1rem;
+            }
+
+            img {
+                height: 180px;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// MENU PAGE STYLES - Professional & Responsive
+// ========================================================= //
+
+/* -----------------------------------------------
+General Card Layout
+-------------------------------------------------- */
+.unified-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* -----------------------------------------------
+Image Wrapper - Fixed Height for Consistency
+-------------------------------------------------- */
+.menu-card-img-wrapper {
+    height: 220px; // fixed height for all images
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+.menu-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // keeps image proportions uniform
+}
+
+/* -----------------------------------------------
+Card Body - Flexible Vertical Layout
+-------------------------------------------------- */
+.menu-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* -----------------------------------------------
+MENU PAGE MAIN STYLING
+-------------------------------------------------- */
+.menu-page {
+    background: #fff;
+    color: #222;
+
+    /* ---------- Menu Header Section ---------- */
+    .menu-header {
+        padding: 3rem 0;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 1rem;
+    }
+
+    /* ---------- Filter Buttons ---------- */
+    .menu-filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+
+        .filter-btn {
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #333;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+
+            &.active,
+            &:hover {
+                background: #222;
+                color: #fff;
+                border-color: #222;
+            }
+        }
+    }
+
+    /* ---------- Menu Items Grid ---------- */
+    .menu-items {
+        padding: 3rem 0;
+
+        .menu-card {
+            background-color: $black !important;
+            border: 1px solid #eee;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #fff;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            img {
+                height: 220px;
+                object-fit: cover;
+            }
+
+            .card-body {
+                padding: 2rem 1.2rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                color: $white;
+            }
+
+            .card-subtitle {
+                font-size: 0.95rem;
+                color: #dddddd !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .card-text {
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 1rem;
+                line-height: 1.4;
+            }
+
+            button {
+                align-self: start;
+                background-color: $dark-beige !important;
+                font-weight: bold !important;
+                border-radius: 2rem !important;
+                padding: 10px 25px !important;
+
+                &:hover {
+                    background-color: $beige !important;
+                    color: $black;
+                }
+            }
+        }
+    }
+
+    /* ===========================================================
+   PRODUCT DETAILS MODAL (Overrides global modal styles)
+   =========================================================== */
+
+    .modal.product-detail-modal {
+
+        // Stronger specificity to override general modal
+        &.product-detail-modal {
+            .modal-dialog {
+                max-width: 600px;
+                margin: 1.5rem auto;
+
+                @media (max-width: 768px) {
+                    max-width: 90%;
+                    margin: 1rem auto;
+                }
+            }
+
+            .modal-content {
+                border-radius: 1rem !important;
+                border: none !important;
+                background: #fff !important;
+                box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25) !important;
+                padding: 0 !important;
+                overflow: hidden;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .modal-header {
+                background: #1f1f1f !important;
+                color: #fff !important;
+                border-bottom: none !important;
+                padding: 1.2rem 1.6rem !important;
+
+                .modal-title {
+                    font-size: 1.3rem !important;
+                    font-weight: 600 !important;
+                    letter-spacing: 0.5px;
+                }
+
+                .btn-close {
+                    filter: invert(1);
+                    opacity: 0.85;
+                    transition: 0.2s ease-in-out;
+
+                    &:hover {
+                        opacity: 1;
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+
+            .modal-body {
+                padding: 2rem 2rem 1.5rem 2rem !important;
+                background: #fefefe !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+
+                img {
+                    width: 100%;
+                    max-height: 280px;
+                    border-radius: 0.75rem;
+                    margin-bottom: 1.8rem; // space under image
+                    object-fit: cover;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                }
+
+                /* Description Box */
+                .desc-box {
+                    background: #f8f8f8;
+                    padding: 1.3rem 1.2rem;
+                    border-radius: 0.75rem;
+                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+                    margin-bottom: 1.5rem;
+                    width: 100%;
+                    color: #444;
+                    font-size: 1rem;
+                    line-height: 1.6;
+                }
+
+                .price {
+                    font-size: 1.15rem;
+                    font-weight: bold;
+                    color: #111;
+                    margin-top: 0.5rem;
+                }
+
+                .category {
+                    color: #666;
+                    margin-top: 0.3rem;
+                }
+            }
+
+            .modal-footer {
+                border-top: none !important;
+                padding: 1.3rem 1.8rem !important;
+                display: flex;
+                justify-content: flex-end;
+                background: #fafafa;
+
+                button {
+                    border-radius: 25px;
+                    padding: 0.6rem 1.4rem;
+                    font-weight: 500;
+                    transition: all 0.2s ease-in-out;
+
+                    &:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    /* -----------------------------------------------
+    RESPONSIVE DESIGN
+    (Mobile First Adjustments)
+    -------------------------------------------------- */
+
+    @media (max-width: 992px) {
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .menu-filters {
+            gap: 0.6rem;
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        .menu-items {
+            padding: 2.5rem 0;
+
+            .menu-card {
+                .card-title {
+                    font-size: 1.1rem;
+                }
+
+                .card-text {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .menu-header {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .menu-filters {
+            flex-direction: column;
+            align-items: center;
+
+            .filter-btn {
+                width: 80%;
+                text-align: center;
+            }
+        }
+
+        .menu-items {
+            padding: 2rem 0;
+
+            .menu-card {
+                margin-bottom: 1.5rem;
+
+                img {
+                    height: 180px;
+                }
+
+                .card-title {
+                    font-size: 1rem;
+                }
+
+                .card-text {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        .product-detail-modal {
+            .modal-body {
+                padding: 1.5rem;
+
+                img {
+                    margin-bottom: 1rem;
+                }
+
+                p {
+                    font-size: 0.95rem;
+                }
+
+                .price {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-title {
+            font-size: 1.6rem;
+        }
+
+        .menu-filters .filter-btn {
+            font-size: 0.9rem;
+            padding: 0.45rem 0.9rem;
+        }
+
+        .menu-items .menu-card img {
+            height: 160px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Contact Page
+// ========================================================= //
+.contact-page {
+    background: #fff;
+    font-family: "Arial", sans-serif;
+
+    section {
+        padding: 3rem 0;
+    }
+
+    h5 {
+        font-family: $font-heading;
+    }
+
+    // -----------------------------
+    // Header
+    // -----------------------------
+    .contact-header {
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: $font-heading;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            font-family: $font-menu;
+            color: #555;
+        }
+    }
+
+    // -----------------------------
+    // Tabs Section
+    // -----------------------------
+    .contact-tabs {
+        .nav-tabs {
+            border-bottom: none;
+            justify-content: center;
+
+            .nav-link {
+                font-weight: 600;
+                font-size: 0.95rem;
+                color: #555;
+                border: 1px solid #eee;
+                border-radius: 0.5rem 0.5rem 0 0;
+                margin: 0 0.5rem;
+                padding: 0.6rem 1.2rem;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: 0.3s;
+
+                &:hover,
+                &.active {
+                    background: #c49a6c;
+                    color: #fff;
+                    border-color: #c49a6c;
+                }
+            }
+        }
+
+        .tab-content {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            text-align: center;
+            color: #555;
+
+            .btn-main {
+                margin-top: 0.5rem;
+            }
+        }
+    }
+
+    // -----------------------------
+    // Stats Section
+    // -----------------------------
+    .contact-info {
+        .contact-card {
+            background-color: $black !important;
+            border: 1px solid #eee;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: 0.3s;
+            background: #fafafa;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            }
+
+            .contact-icon {
+                font-size: 2rem;
+                color: $dark-beige !important;
+                margin-bottom: 1rem !important;
+            }
+
+            h6 {
+                font-weight: 700;
+                margin-bottom: 0.3rem;
+                color: $white !important;
+            }
+
+            p {
+                font-size: 1rem;
+                color: #d7d7d7;
+                margin: 0;
+            }
+        }
+    }
+
+    // -----------------------------
+    // Contact Body (Map + Form)
+    // -----------------------------
+    .contact-body {
+        .map-container {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            border-radius: 0.5rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+            border: 1px solid #ddd;
+
+            &:focus {
+                border-color: #c49a6c;
+                box-shadow: none;
+            }
+        }
+
+        .btn-main {
+            background: #c49a6c;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: 0.3s;
+
+            &:hover {
+                background: #a87f55;
+            }
+        }
+
+        .text-success {
+            font-weight: 600;
+            color: green;
+            margin-top: 0.5rem;
+        }
+    }
+
+    // -----------------------------
+    // Contact Cards (Tabs) style
+    // -----------------------------
+    .contact-card {
+        font-family: $font-body;
+        border: 1px solid #eee;
+        border-radius: 1rem;
+        padding: 1.5rem 1rem;
+        height: 100%;
+        transition: 0.3s;
+        background: #fff;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon {
+            font-size: 2rem;
+            color: #c49a6c;
+            margin-bottom: 0.5rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 0;
+            white-space: pre-line;
+        }
+    }
+
+    // -----------------------------
+    // Responsive tweaks
+    // -----------------------------
+    @media (max-width: 768px) {
+        section {
+            padding: 2rem 1rem;
+        }
+
+        .contact-tabs .nav-link {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.9rem;
+        }
+
+        .contact-stats .stat-card {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Reservation Page
+// ========================================================= //
+.reservation-page {
+    background: #fff;
+
+    section {
+        padding: 2.5rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #222;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+
+    .reservation-form {
+        .form-control {
+            border-radius: 0.6rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ddd;
+            transition: 0.3s;
+
+            &:focus {
+                border-color: #c49a6c;
+                box-shadow: 0 0 5px rgba(196, 154, 108, 0.5);
+            }
+        }
+
+        .btn-main {
+            background: #c49a6c;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 0.6rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: 0.3s;
+
+            &:hover {
+                background: #a87f55;
+            }
+        }
+    }
+
+    // ========================================================= //
+    // Responsive Design
+    // ========================================================= //
+    @media (max-width: 992px) {
+        .reservation-page {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .reservation-page {
+            section {
+                padding: 2rem 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .reservation-form-section {
+                margin: 1.5rem;
+            }
+
+            .reservation-form .btn-main {
+                width: 100%;
+                padding: 0.9rem;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .reservation-page {
+            section {
+                padding: 1.5rem 0;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .reservation-form-section {
+                padding: 1.2rem;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+            }
+
+            .reservation-form .form-control {
+                font-size: 0.95rem;
+                padding: 0.7rem;
+            }
+
+            .reservation-form .btn-main {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Responsive Design
+// ========================================================= //
+@media (max-width: 768px) {
+    .hero-carousel .hero-slide {
+        height: 60vh;
+
+        h1 {
+            font-size: 2.2rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .quote-section .quote-text {
+        font-size: 1.3rem;
+        padding: 0 1rem;
+    }
+
+    .about-preview .about-text {
+        font-size: 1rem;
+    }
+
+    .offers {
+        margin: 30px 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-carousel .hero-slide {
+        height: 50vh;
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .quote-section {
+        height: auto;
+        padding: 3rem 1rem;
+
+        .quote-text {
+            font-size: 1.1rem;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+        }
+    }
+
+    .about-preview {
+        padding: 40px 0 0 0;
+
+        .about-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    }
+
+    .menu-card img,
+    .team-card img {
+        height: 180px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ====================== Login Admin Page ====================== //
+.login-page {
+    // Fullscreen flex container to center the login card
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $white; // Page background white
+
+    .login-form {
+        // Login card styling
+        background-color: $white; // Card background white
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba($black, 0.15); // Soft but visible shadow
+        width: 100%;
+        max-width: 400px;
+        font-family: $font-body;
+        transition: all 0.3s ease;
+
+        // Login title
+        .login-title {
+            font-family: $font-heading;
+            font-weight: $bold;
+            font-size: 2rem;
+            color: $black;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        // Form group (label + input)
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+
+            label {
+                font-weight: $medium;
+                margin-bottom: 0.5rem;
+                color: $dark-beige;
+            }
+
+            input {
+                padding: 0.8rem 1rem;
+                border: 1px solid $dark-beige;
+                border-radius: 8px;
+                font-size: 1rem;
+                outline: none;
+                transition: all 0.3s ease;
+
+                &:focus {
+                    border-color: $black;
+                    box-shadow: 0 0 5px rgba($black, 0.2);
+                }
+            }
+        }
+
+        // Error message styling
+        .error-message {
+            color: red;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: $medium;
+        }
+
+        // Login button styling
+        .login-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: $black; // Button color black
+            color: $white;
+            font-weight: $bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: $font-menu;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: lighten($black, 10%); // Slightly lighter on hover
+            }
+
+            &:disabled {
+                background-color: lighten($black, 30%);
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ====================== Testmonials Management ====================== //
+.reviews-management {
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+
+    h4,
+    h5 {
+        color: #333;
+    }
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-body {
+        padding: 1.2rem;
+
+        p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .badge {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 8px;
+        }
+    }
+
+    .d-flex.gap-2 {
+        margin-top: 0.5rem;
+
+        button {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.7rem;
+        }
+    }
+}
+
+// Add Review Modal custom style
+.modal-content {
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    .modal-header {
+        border-bottom: none;
+
+        h5 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .btn-close {
+            opacity: 0.6;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .modal-body {
+        form {
+            .form-group {
+                margin-bottom: 1rem;
+
+                label {
+                    font-weight: 500;
+                    color: #444;
+                }
+
+                input,
+                textarea,
+                select {
+                    border-radius: 8px;
+                    border: 1px solid #ccc;
+                    padding: 0.5rem 0.75rem;
+                    font-size: 0.95rem;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #4a90e2;
+                        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-footer {
+        border-top: none;
+        justify-content: flex-end;
+
+        button {
+            border-radius: 8px;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.9rem;
+        }
+    }
+}
+
+// Edit modal (inline card)
+.position-fixed {
+    border-radius: 14px;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 1rem 1.2rem;
+    width: 400px;
+    z-index: 1050;
+
+    h5 {
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        label {
+            font-weight: 500;
+            color: #444;
+        }
+
+        input,
+        textarea,
+        select {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.95rem;
+
+            &:focus {
+                outline: none;
+                border-color: #4a90e2;
+                box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+            }
+        }
+    }
+
+    .d-flex.gap-2 {
+        justify-content: flex-end;
+
+        button {
+            border-radius: 8px;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.9rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================= //
+// Modal Custom Styles
+// ========================================================= //
+.modal {
+    padding-left: 0 !important;
+}
+
+.modal-content {
+    border-radius: 1rem;
+    padding: 2rem;
+    font-family: $font-body;
+
+    // Modal header
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 1rem;
+
+        .modal-title {
+            font-family: $font-heading;
+            font-weight: $bold;
+            font-size: 1.5rem;
+            color: $black !important;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+        }
+    }
+
+    // =============================
+    // Modal Body Styles
+    // =============================
+    .modal-body {
+        padding-top: 1rem;
+
+        label {
+            font-weight: $medium;
+            margin-bottom: 0.5rem;
+        }
+
+        img {
+            width: 100%;
+            height: 25rem;
+        }
+
+        input,
+        textarea {
+            border-radius: 0.5rem;
+            border: 1px solid $dark-beige;
+            padding: 0.5rem 0.8rem;
+            font-family: $font-body;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        input,
+        textarea,
+        select {
+
+            &:focus,
+            &:hover {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        // =============================
+        // Star Rating
+        // =============================
+        .star-rating {
+            span {
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: $gray;
+
+                &.active {
+                    color: $dark-beige;
+                }
+            }
+        }
+
+        // =============================
+        // Custom Select Dropdown
+        // =============================
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem;
+            border: 1px solid $dark-beige !important;
+
+            select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-color: $white;
+                border: 1px solid $dark-beige !important;
+                border-radius: 0.5rem;
+                padding: 0.5rem 2.5rem 0.5rem 0.8rem; // extra right padding for arrow
+                font-family: $font-body;
+                width: 100%;
+                cursor: pointer;
+            }
+
+            // Custom arrow icon
+            &::after {
+                content: "▼";
+                position: absolute;
+                right: 0.8rem;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: $dark-beige;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    // Modal footer
+    .modal-footer {
+        border-top: none;
+        padding-top: 1rem;
+
+        .btn {
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-weight: $bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: $dark-beige;
+            border: none;
+
+            &:hover {
+                background-color: $black;
+                color: $white;
+            }
+        }
+
+        .btn-secondary {
+            background-color: $black;
+            border: none;
+            color: $white;
+
+            &:hover {
+                background-color: darken($gray, 10%);
+                color: $black;
+            }
+        }
+    }
+}
