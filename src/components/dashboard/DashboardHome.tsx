@@ -10,7 +10,7 @@ import { collection, getDocs } from "firebase/firestore";
 interface StatItem {
     title: string;
     value: number | string;
-    icon: JSX.Element;
+    icon: React.ReactElement;
     color: "beige" | "gray" | "white" | "dark";
 }
 
@@ -23,7 +23,7 @@ interface StatItem {
  * Each Firebase fetch operation has a commented example
  * showing how to fetch the same data from an external API.
  */
-const DashboardHome: React.FC = (): JSX.Element => {
+const DashboardHome: React.FC = () => {
     // -------------------------------
     // State: Dashboard statistics
     // -------------------------------

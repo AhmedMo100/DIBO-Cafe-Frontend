@@ -32,7 +32,7 @@ interface NavItem {
 }
 
 /** Sidebar functional component (no props) */
-const Sidebar: React.FC = (): JSX.Element => {
+const Sidebar: React.FC = () => {
     const location = useLocation();
     const [show, setShow] = useState<boolean>(false);
 
@@ -64,7 +64,7 @@ const Sidebar: React.FC = (): JSX.Element => {
      * - Shared structure used by both the fixed sidebar (desktop) and offcanvas (mobile).
      * - Kept as an inner component for clarity and to share closures like handleClose.
      */
-    const SidebarContent = (): JSX.Element => (
+    const SidebarContent = () => (
         <div className="dashboard-sidebar d-flex flex-column justify-content-between align-items-center h-100">
             {/* Top Section: Logo + Navigation */}
             <div className="w-100 d-flex flex-column align-items-center">

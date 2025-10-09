@@ -7,8 +7,9 @@ import Logo from "../../assets/images/DIBO Logo.jpg";
 interface SocialLink {
     name: string;
     url: string;
-    icon: JSX.Element;
+    icon: React.ReactElement;
 }
+
 
 // Social links configuration (Dynamic)
 const socialLinks: SocialLink[] = [

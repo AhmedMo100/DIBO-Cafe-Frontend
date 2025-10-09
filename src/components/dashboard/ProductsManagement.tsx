@@ -70,7 +70,7 @@ const MAX_FEATURED = 6;
 /* ============================
 Component
 ============================ */
-const ProductsManagement: React.FC = (): JSX.Element => {
+const ProductsManagement: React.FC = () => {
     // ---------------------------- Local State ----------------------------
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
